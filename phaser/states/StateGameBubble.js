@@ -9,6 +9,8 @@ StateGameBubble.prototype = {
     constructor: StateGameBubble,
     preload: function(){
         game.load.image('bubble', '/phaser/assets/bubble.png');
+        game.load.spritesheet('bubble_sheet', '/phaser/assets/bubble_spritesheet.png', 218, 188);
+        game.load.audio('pop', ['/phaser/assets/pop.mp3']);
     },
     create: function(){
         //var bubble = this.game.add.sprite(0, 0, 'bubble');
