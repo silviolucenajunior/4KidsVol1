@@ -1,4 +1,4 @@
-var game = new Phaser.Game(540, 960, Phaser.CANVAS, 'game');
+var game = new Phaser.Game(480, 800, Phaser.CANVAS, 'game');
 _stateGameShapes = new StateGameShapes();
 _stateGameBubble = new StateGameBubble();
 _stateGamePaint = new StateGamePaint();
