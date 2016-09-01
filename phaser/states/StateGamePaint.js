@@ -4,6 +4,7 @@ function StateGamePaint() {
     this.actualColor = 0;
     this.points = [];
     this.particleEmitter = null;
+    this.timeLine = 1000;
 };
 
 StateGamePaint.prototype = {
@@ -16,8 +17,10 @@ StateGamePaint.prototype = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.particleEmitter = game.add.emitter(50, 50, 100);
         this.particleEmitter.makeParticles('particle');
-        this.particleEmitter.gravity = 200;
-        this.particleEmitter.start(false, 1000, 20);
+        this.particleEmitter.gravity = 100;
+        this.particleEmitter.setAlpha(1,0, 600);
+        this.particleEmitter.setScale(1, 0, 1, 0, 600)
+        this.particleEmitter.start(false, 600, 13);
         this.particleEmitter.on = false;
     },
     create: function(){
@@ -30,21 +33,25 @@ StateGamePaint.prototype = {
         game.input.addMoveCallback(this.paint, this);
     },
     update: function(){
+        this.timeLine -= 1;
         this.bitmapdata.clear();
         this._drawPointsAsLine();
     },
     _drawPointsAsLine: function(){
         for (var i = 0, count = this.points.length; i < count; i++){
-            this.points[i].lifeTime -= 1;
+            this.points[i].lifeTime -= 3;
             this.drawLine(i > 0 ? this.points[i-1] : this.points[i], this.points[i]);
         }
     },
     drawLine: function(fromPoint, toPoint){
-        this.bitmapdata.ctx.strokeStyle = "white";
+        var alphaValue = toPoint.lifeTime / 100 * 100 / 100;
+        alphaValue = alphaValue < 0 ? 0 : alphaValue;
+        this.bitmapdata.ctx.strokeStyle = "rgba(" + this.colors[this.actualColor].r +", " + this.colors[this.actualColor].g +", " + this.colors[this.actualColor].b +", " + alphaValue +")";
+        //this.bitmapdata.ctx.strokeStyle = "white";
         this.bitmapdata.ctx.beginPath();
         this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
         this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
-        this.bitmapdata.ctx.lineWidth = 3;
+        this.bitmapdata.ctx.lineWidth = 8;
         this.bitmapdata.ctx.stroke();
         this.bitmapdata.ctx.closePath();
         this.bitmapdata.render();
@@ -67,10 +74,10 @@ StateGamePaint.prototype = {
             this.points.push({
                 x: x,
                 y: y,
-                lifeTime: 1000
+                lifeTime: 300
             });
             //this.bitmapdata.circle(x, y, 2, this.colors[this.actualColor].rgba);
-            //this.actualColor = game.math.wrapValue(this.actualColor, 1, 359);
+            this.actualColor = game.math.wrapValue(this.actualColor, 1, 359);
         }
     }
 };
