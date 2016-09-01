@@ -46,7 +46,7 @@ StateGamePaint.prototype = {
     drawLine: function(fromPoint, toPoint){
         var alphaValue = toPoint.lifeTime / 100 * 100 / 100;
         alphaValue = alphaValue < 0 ? 0 : alphaValue;
-        this.bitmapdata.ctx.strokeStyle = "rgba(" + this.colors[this.actualColor].r +", " + this.colors[this.actualColor].g +", " + this.colors[this.actualColor].b +", " + alphaValue +")";
+        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", " + alphaValue +")";
         //this.bitmapdata.ctx.strokeStyle = "white";
         this.bitmapdata.ctx.beginPath();
         this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
@@ -74,7 +74,8 @@ StateGamePaint.prototype = {
             this.points.push({
                 x: x,
                 y: y,
-                lifeTime: 300
+                lifeTime: 300,
+                color: this.colors[this.actualColor]
             });
             //this.bitmapdata.circle(x, y, 2, this.colors[this.actualColor].rgba);
             this.actualColor = game.math.wrapValue(this.actualColor, 1, 359);
