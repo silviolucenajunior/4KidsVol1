@@ -2,7 +2,7 @@ function StateGamePaint() {
     this.bitmapdata = undefined;
     this.colors = undefined;
     this.actualColor = 0;
-    this.points = [];
+    this.lines = [[]];
     this.particleEmitter = null;
     this.timeLine = 1000;
 };
@@ -38,9 +38,11 @@ StateGamePaint.prototype = {
         this._drawPointsAsLine();
     },
     _drawPointsAsLine: function(){
-        for (var i = 0, count = this.points.length; i < count; i++){
-            this.points[i].lifeTime -= 3;
-            this.drawLine(i > 0 ? this.points[i-1] : this.points[i], this.points[i]);
+        for (var line = 0, linesCount = this.lines.length; line < linesCount; line++){
+            for (var i = 0, count = this.lines[line].length; i < count; i++){
+                this.lines[line][i].lifeTime -= 3;
+                this.drawLine(i > 0 ? this.lines[line][i-1] : this.lines[line][i], this.lines[line][i]);
+            }
         }
     },
     drawLine: function(fromPoint, toPoint){
@@ -60,10 +62,12 @@ StateGamePaint.prototype = {
     enableParticleEmitter: function(point){
         this.particleEmitter.on = true;
         console.log("Enable Particle Emitter");
+        console.log(this.lines);
     },
     disableParticleEmitter: function(pointer) {
         this.particleEmitter.on = false;
         console.log("Disable Particle Emitter");
+        this.lines.push([]);
     },
     paint: function(pointer, x, y){
         this.particleEmitter.emitX = x;
@@ -71,7 +75,9 @@ StateGamePaint.prototype = {
         //this.particleEmitter.x = x;
         //this.particleEmitter.y = y;
         if (pointer.isDown){
-            this.points.push({
+            console.log(this.lines);
+            console.log(this.lines.length);
+            this.lines[this.lines.length - 1].push({
                 x: x,
                 y: y,
                 lifeTime: 300,
