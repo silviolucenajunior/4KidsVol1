@@ -26,7 +26,7 @@ StateGamePaint.prototype = {
     create: function(){
         this._startParticleEmitter();
         this.colors = Phaser.Color.HSVColorWheel();
-        this.bitmapdata = game.add.bitmapData(800, 600);
+        this.bitmapdata = game.add.bitmapData(game.scale.width, game.scale.height);
         game.add.sprite(0, 0, this.bitmapdata);
         game.input.onDown.add(this.enableParticleEmitter, this);
         game.input.onUp.add(this.disableParticleEmitter, this);
@@ -50,6 +50,8 @@ StateGamePaint.prototype = {
         alphaValue = alphaValue < 0 ? 0 : alphaValue;
         this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", " + alphaValue +")";
         //this.bitmapdata.ctx.strokeStyle = "white";
+        this.bitmapdata.ctx.lineJoin = "round";
+        this.bitmapdata.ctx.lineCap = "round";
         this.bitmapdata.ctx.beginPath();
         this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
         this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
