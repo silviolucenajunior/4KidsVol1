@@ -40,10 +40,13 @@ StateGamePaint.prototype = {
     _drawPointsAsLine: function(){
         for (var line = 0, linesCount = this.lines.length; line < linesCount; line++){
             for (var i = 0, count = this.lines[line].length; i < count; i++){
-                this.lines[line][i].lifeTime -= 3;
-                this.drawLine(i > 0 ? this.lines[line][i-1] : this.lines[line][i], this.lines[line][i]);
+                if (this.lines[line][i].lifeTime > 0) {
+                    this.lines[line][i].lifeTime -= 3;
+                    this.drawLine(i > 0 ? this.lines[line][i-1] : this.lines[line][i], this.lines[line][i]);
+                }
             }
         }
+        this.bitmapdata.render();
     },
     drawLine: function(fromPoint, toPoint){
         var alphaValue = toPoint.lifeTime / 100 * 100 / 100;
@@ -58,7 +61,7 @@ StateGamePaint.prototype = {
         this.bitmapdata.ctx.lineWidth = 8;
         this.bitmapdata.ctx.stroke();
         this.bitmapdata.ctx.closePath();
-        this.bitmapdata.render();
+        //this.bitmapdata.render();
         //this.bitmapdata.refreshBuffer();
     },
     enableParticleEmitter: function(point){
