@@ -5,6 +5,8 @@ function StateGamePaint() {
     this.lines = [[]];
     this.particleEmitter = null;
     this.timeLine = 1000;
+    this.minDistance = 50;
+    this.clearDelay = 100;
 };
 
 StateGamePaint.prototype = {
@@ -33,8 +35,14 @@ StateGamePaint.prototype = {
         game.input.addMoveCallback(this.paint, this);
     },
     update: function(){
+        this.clearDelay -= 25;
+        if (this.clearDelay <= 0) {
+            console.log("Clear");
+            this.bitmapdata.clear();
+            this.clearDelay = 100;
+        }
         this.timeLine -= 1;
-        this.bitmapdata.clear();
+
         this._drawPointsAsLine();
     },
     _drawPointsAsLine: function(){
@@ -54,7 +62,7 @@ StateGamePaint.prototype = {
         this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", " + alphaValue +")";
         //this.bitmapdata.ctx.strokeStyle = "white";
         this.bitmapdata.ctx.lineJoin = "round";
-        this.bitmapdata.ctx.lineCap = "round";
+        //this.bitmapdata.ctx.lineCap = "round";
         this.bitmapdata.ctx.beginPath();
         this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
         this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
@@ -74,22 +82,42 @@ StateGamePaint.prototype = {
         console.log("Disable Particle Emitter");
         this.lines.push([]);
     },
+
+    getLastPointOfCurrentLine: function(){
+        return this.lines[this.lines.length - 1][this.lines[this.lines.length - 1].length - 1];
+    },
+    hasMinDistance: function(x1, y1, x2, y2, minDistance){
+        var distance = Math.sqrt( Math.pow( x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        return distance > minDistance;
+    },
     paint: function(pointer, x, y){
         this.particleEmitter.emitX = x;
         this.particleEmitter.emitY = y;
         //this.particleEmitter.x = x;
         //this.particleEmitter.y = y;
         if (pointer.isDown){
-            console.log(this.lines);
-            console.log(this.lines.length);
-            this.lines[this.lines.length - 1].push({
-                x: x,
-                y: y,
-                lifeTime: 300,
-                color: this.colors[this.actualColor]
-            });
-            //this.bitmapdata.circle(x, y, 2, this.colors[this.actualColor].rgba);
-            this.actualColor = game.math.wrapValue(this.actualColor, 1, 359);
+            var lastPoint = this.getLastPointOfCurrentLine();
+
+            if (!lastPoint) {
+                this.lines[this.lines.length - 1].push({
+                    x: x,
+                    y: y,
+                    lifeTime: 300,
+                    color: this.colors[this.actualColor]
+                });
+                //this.bitmapdata.circle(x, y, 2, this.colors[this.actualColor].rgba);
+                this.actualColor = game.math.wrapValue(this.actualColor, 3, 359);
+            }else if (this.hasMinDistance(lastPoint.x, lastPoint.y, x, y, this.minDistance)) {
+                this.lines[this.lines.length - 1].push({
+                    x: x,
+                    y: y,
+                    lifeTime: 300,
+                    color: this.colors[this.actualColor]
+                });
+                //this.bitmapdata.circle(x, y, 2, this.colors[this.actualColor].rgba);
+                this.actualColor = game.math.wrapValue(this.actualColor, 3, 359);
+            } else {
+            }
         }
     }
 };
