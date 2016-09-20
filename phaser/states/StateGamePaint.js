@@ -5,7 +5,7 @@ function StateGamePaint() {
     this.lines = [[]];
     this.particleEmitter = null;
     this.timeLine = 1000;
-    this.minDistance = 50;
+    this.minDistance = 25;
     this.clearDelay = 100;
 };
 
@@ -14,15 +14,16 @@ StateGamePaint.prototype = {
     preload: function(){
         game.load.image('bubble', '/phaser/assets/bubble.png');
         game.load.image('particle', '/phaser/assets/purpledot.gif');
+        game.load.audio('background_music', '/phaser/assets/amclassical_beethoven_fur_elise.mp3');
     },
     _startParticleEmitter: function(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.particleEmitter = game.add.emitter(50, 50, 100);
+        this.particleEmitter = game.add.emitter(150, 150, 100);
         this.particleEmitter.makeParticles('particle');
         this.particleEmitter.gravity = 100;
-        this.particleEmitter.setAlpha(1,0, 600);
-        this.particleEmitter.setScale(1, 0, 1, 0, 600)
-        this.particleEmitter.start(false, 600, 13);
+        this.particleEmitter.setAlpha(1.5, 0.5, 800);
+        this.particleEmitter.setScale(1.5, 0.5, 1.0, 0.5, 800)
+        this.particleEmitter.start(false, 700, 23);
         this.particleEmitter.on = false;
     },
     create: function(){
@@ -30,6 +31,10 @@ StateGamePaint.prototype = {
         this.colors = Phaser.Color.HSVColorWheel();
         this.bitmapdata = game.add.bitmapData(game.scale.width, game.scale.height);
         game.add.sprite(0, 0, this.bitmapdata);
+        window.music = game.add.audio('background_music');
+        music.volume = 0.025;
+        music.play();
+        music.loopFull();
         game.input.onDown.add(this.enableParticleEmitter, this);
         game.input.onUp.add(this.disableParticleEmitter, this);
         game.input.addMoveCallback(this.paint, this);
@@ -62,7 +67,7 @@ StateGamePaint.prototype = {
         this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", " + alphaValue +")";
         //this.bitmapdata.ctx.strokeStyle = "white";
         this.bitmapdata.ctx.lineJoin = "round";
-        //this.bitmapdata.ctx.lineCap = "round";
+        this.bitmapdata.ctx.lineCap = "round";
         this.bitmapdata.ctx.beginPath();
         this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
         this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);

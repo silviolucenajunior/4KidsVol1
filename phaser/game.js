@@ -23,7 +23,7 @@ var game = new Phaser.Game("100%", "100%", Phaser.CANVAS, 'game', {
         game.state.add('StateGamePaint', _stateGamePaint);
         game.state.add('StateSelectGame', _stateSelectGame);
         game.state.add('StateIntro', _stateIntro);
-        game.state.start('StateIntro');
+        game.state.start('StateGamePaint');
     }
 });
 
