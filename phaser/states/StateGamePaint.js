@@ -67,29 +67,29 @@ StateGamePaint.prototype = {
         alphaValue = alphaValue < 0 ? 0 : alphaValue;
 
 //DRAW BLUR
-        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.1)";
-        this.bitmapdata.ctx.beginPath();
-        this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
-        this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
-        this.bitmapdata.ctx.lineWidth = 30;
-        this.bitmapdata.ctx.stroke();
-        this.bitmapdata.ctx.closePath();
+        // this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.1)";
+        // this.bitmapdata.ctx.beginPath();
+        // this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
+        // this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
+        // this.bitmapdata.ctx.lineWidth = 30;
+        // this.bitmapdata.ctx.stroke();
+        // this.bitmapdata.ctx.closePath();
 
-        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.2)";
-        this.bitmapdata.ctx.beginPath();
-        this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
-        this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
-        this.bitmapdata.ctx.lineWidth = 28;
-        this.bitmapdata.ctx.stroke();
-        this.bitmapdata.ctx.closePath();
+        // this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.2)";
+        // this.bitmapdata.ctx.beginPath();
+        // this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
+        // this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
+        // this.bitmapdata.ctx.lineWidth = 28;
+        // this.bitmapdata.ctx.stroke();
+        // this.bitmapdata.ctx.closePath();
 
-        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.3)";
-        this.bitmapdata.ctx.beginPath();
-        this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
-        this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
-        this.bitmapdata.ctx.lineWidth = 24;
-        this.bitmapdata.ctx.stroke();
-        this.bitmapdata.ctx.closePath();
+        // this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.3)";
+        // this.bitmapdata.ctx.beginPath();
+        // this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
+        // this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
+        // this.bitmapdata.ctx.lineWidth = 24;
+        // this.bitmapdata.ctx.stroke();
+        // this.bitmapdata.ctx.closePath();
 
         
 
@@ -103,10 +103,10 @@ StateGamePaint.prototype = {
 
         this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", " + alphaValue +")";
         //this.bitmapdata.ctx.strokeStyle = "white";
-        //this.bitmapdata.ctx.lineJoin = "round";
-        //this.bitmapdata.ctx.lineCap = "round";
-        //this.bitmapdata.ctx.shadowBlur = 20;
-        //this.bitmapdata.ctx.shadowColor = "black";
+        this.bitmapdata.ctx.lineJoin = "round";
+        this.bitmapdata.ctx.lineCap = "round";
+        this.bitmapdata.ctx.shadowBlur = 20;
+        this.bitmapdata.ctx.shadowColor = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", " + alphaValue +")";
         this.bitmapdata.ctx.beginPath();
         this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
         this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
