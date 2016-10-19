@@ -19,6 +19,7 @@ StateGamePaint.prototype = {
     _startParticleEmitter: function(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.particleEmitter = game.add.emitter(150, 150, 100);
+        this.particleEmitter.particleClass = PaintParticle;
         this.particleEmitter.makeParticles('particle');
         this.particleEmitter.gravity = 100;
         this.particleEmitter.setAlpha(1.5, 0.5, 800);
