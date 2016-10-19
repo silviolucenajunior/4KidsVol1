@@ -22,9 +22,9 @@ StateGamePaint.prototype = {
         this.particleEmitter.particleClass = PaintParticle;
         this.particleEmitter.makeParticles('particle');
         this.particleEmitter.gravity = 100;
-        this.particleEmitter.setAlpha(1.5, 0.5, 800);
-        this.particleEmitter.setScale(1.5, 0.5, 1.0, 0.5, 800)
-        this.particleEmitter.start(false, 700, 23);
+        this.particleEmitter.setAlpha(1.5, 0.5, 1000);
+        this.particleEmitter.setScale(2.5, 0.5, 2.0, 0.5, 1200)
+        this.particleEmitter.start(false, 700, 33);
         this.particleEmitter.on = false;
     },
     create: function(){
@@ -65,18 +65,66 @@ StateGamePaint.prototype = {
     drawLine: function(fromPoint, toPoint){
         var alphaValue = toPoint.lifeTime / 100 * 100 / 100;
         alphaValue = alphaValue < 0 ? 0 : alphaValue;
-        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", " + alphaValue +")";
-        //this.bitmapdata.ctx.strokeStyle = "white";
-        this.bitmapdata.ctx.lineJoin = "round";
-        this.bitmapdata.ctx.lineCap = "round";
+
+//DRAW BLUR
+        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.1)";
         this.bitmapdata.ctx.beginPath();
         this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
         this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
-        this.bitmapdata.ctx.lineWidth = 8;
+        this.bitmapdata.ctx.lineWidth = 30;
         this.bitmapdata.ctx.stroke();
         this.bitmapdata.ctx.closePath();
+
+        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.2)";
+        this.bitmapdata.ctx.beginPath();
+        this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
+        this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
+        this.bitmapdata.ctx.lineWidth = 28;
+        this.bitmapdata.ctx.stroke();
+        this.bitmapdata.ctx.closePath();
+
+        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", 0.3)";
+        this.bitmapdata.ctx.beginPath();
+        this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
+        this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
+        this.bitmapdata.ctx.lineWidth = 24;
+        this.bitmapdata.ctx.stroke();
+        this.bitmapdata.ctx.closePath();
+
+        
+
+        
+
+
+
+
+        //Draw LINE
+
+
+        this.bitmapdata.ctx.strokeStyle = "rgba(" + toPoint.color.r +", " + toPoint.color.g +", " + toPoint.color.b +", " + alphaValue +")";
+        //this.bitmapdata.ctx.strokeStyle = "white";
+        //this.bitmapdata.ctx.lineJoin = "round";
+        //this.bitmapdata.ctx.lineCap = "round";
+        //this.bitmapdata.ctx.shadowBlur = 20;
+        //this.bitmapdata.ctx.shadowColor = "black";
+        this.bitmapdata.ctx.beginPath();
+        this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
+        this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
+        this.bitmapdata.ctx.lineWidth = 16;
+        this.bitmapdata.ctx.stroke();
+        this.bitmapdata.ctx.closePath();
+
+       /* this.bitmapdata.ctx.strokeStyle = "rgba(255, 255, 255, 1)";
+        this.bitmapdata.ctx.beginPath();
+        this.bitmapdata.ctx.moveTo(fromPoint.x, fromPoint.y);
+        this.bitmapdata.ctx.lineTo(toPoint.x, toPoint.y);
+        this.bitmapdata.ctx.lineWidth = 2;
+        this.bitmapdata.ctx.stroke();
+        this.bitmapdata.ctx.closePath();*/
         //this.bitmapdata.render();
         //this.bitmapdata.refreshBuffer();
+        //
+        
     },
     enableParticleEmitter: function(point){
         this.particleEmitter.on = true;
@@ -125,5 +173,7 @@ StateGamePaint.prototype = {
             } else {
             }
         }
+
+        window.actualColor = this.colors[this.actualColor];
     }
 };
